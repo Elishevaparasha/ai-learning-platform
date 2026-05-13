@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import sequelize from './config/database';
-import './models'; // זה מפעיל את הקשרים שהגדרנו קודם
+import './models'; 
+import userRoutes from './routes/userRoutes'; 
 
 const app = express();
 app.use(cors());
@@ -9,16 +10,17 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
-async function startServer() {
+app.use('/api/users', userRoutes);
+
+const startServer = async () => {
   try {
-    await sequelize.sync({ force: false }); // מחבר ומסנכרן את הטבלאות
+await sequelize.sync();
     console.log('Database connected successfully.');
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
+    app.listen(5000, () => console.log('Server is running on port 5000'));
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
-}
+};
+
 
 startServer();
