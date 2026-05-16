@@ -4,8 +4,10 @@ import sequelize from './config/database';
 import './models'; 
 import userRoutes from './routes/userRoutes'; 
 import categoryRoutes from './routes/categoryRoutes';
+import subCategoryRoutes from './routes/subCategoryRoutes';
 import './models/User';
 import './models/Category'; 
+import './models/SubCategory';
 
 const app = express();
 app.use(cors());
@@ -15,6 +17,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/subcategories', subCategoryRoutes);
 
 const startServer = async () => {
   try {
