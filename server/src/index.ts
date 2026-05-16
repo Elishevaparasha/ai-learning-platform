@@ -8,6 +8,8 @@ import subCategoryRoutes from './routes/subCategoryRoutes';
 import './models/User';
 import './models/Category'; 
 import './models/SubCategory';
+import './models/Course';
+import courseRoutes from './routes/courseRoutes';
 
 const app = express();
 app.use(cors());
@@ -18,6 +20,7 @@ const PORT = process.env.PORT || 5000;
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/subcategories', subCategoryRoutes);
+app.use('/api/courses', courseRoutes);
 
 const startServer = async () => {
   try {
