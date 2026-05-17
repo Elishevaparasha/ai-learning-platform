@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { createCategory, getCategories } from '../controllers/categoryController'; // הוספנו את getCategories בייבוא
+import { createCategory, getCategories } from '../controllers/categoryController';
 
 const router = Router();
 
-// נתיב ליצירת קטגוריה (כבר קיים)
-router.post('/create', createCategory);
+// נתיב לקבלת כל הקטגוריות ותתי-הקטגוריות
+router.get('/', getCategories);
 
-// הנתיב החדש: קבלת כל הקטגוריות
-router.get('/all', getCategories);
+// נתיב ליצירת קטגוריה חדשה
+router.post('/', createCategory);
 
 export default router;
