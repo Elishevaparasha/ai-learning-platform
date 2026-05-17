@@ -3,13 +3,13 @@ import { createPrompt, getUserHistory, getAdminDashboardData } from '../controll
 
 const router = Router();
 
-// יצירת שאלה וקבלת תשובת AI
+// יצירת שאלה וקבלת תשובת AI [cite: 34]
 router.post('/generate', createPrompt);
 
-// היסטוריית למידה של משתמש
+// היסטוריית למידה של משתמש ספציפי 
 router.get('/history/:userId', getUserHistory);
 
-// דשבורד מנהל - כל הפרומפטים
+// דשבורד מנהל - כל הפרומפטים וכל המשתמשים 
 router.get('/admin/all', getAdminDashboardData);
 
 export default router;
