@@ -1,26 +1,26 @@
-import OpenAI from 'openai';
+import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// אתחול ה-SDK של גוגל עם המפתח מה-env
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-export const generateAIResponse = async (category: string, subCategory: string, question: string) => {
+export const generateAIResponse = async (category: string, subCategory: string, question: string): Promise<string> => {
   try {
-    const prompt = `You are a learning assistant. The user is studying ${category} - ${subCategory}. 
-                    Question: ${question}. 
-                    Provide a clear and helpful explanation.`;
+    const prompt = `You are a professional learning assistant. The user is studying the topic: ${category} - ${subCategory}. 
+                    Please answer the following question in Hebrew:
+                    Question: ${question}`;
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // או gpt-4o אם יש גישה
-      messages: [{ role: "user", content: prompt }],
+    // קריאה למודל העדכני והמהיר של גוגל
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: prompt,
     });
 
-    return response.choices[0].message.content;
+    return response.text || "לא התקבל מענה מה-AI.";
   } catch (error) {
-    console.error("AI Service Error:", error);
-    throw new Error("Failed to get response from AI");
+    console.error("Gemini AI Service Error:", error);
+    throw new Error("Failed to get real response from Gemini AI");
   }
 };
