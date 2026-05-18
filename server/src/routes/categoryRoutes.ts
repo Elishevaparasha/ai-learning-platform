@@ -1,12 +1,10 @@
 import { Router } from 'express';
-import { createCategory, getCategories } from '../controllers/categoryController';
+import { createCategory, getCategories, getSubCategoriesByCategoryId } from '../controllers/categoryController';
 
 const router = Router();
 
-// נתיב לקבלת כל הקטגוריות ותתי-הקטגוריות
 router.get('/', getCategories);
-
-// נתיב ליצירת קטגוריה חדשה
 router.post('/', createCategory);
+router.get('/:id/subcategories', getSubCategoriesByCategoryId);
 
 export default router;

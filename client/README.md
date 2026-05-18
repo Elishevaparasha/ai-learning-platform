@@ -1,59 +1,54 @@
-# Client
+# פלטפורמת למידה מבוססת AI - קליינט (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.11.
+פרויקט זה מהווה את חלק ה-Frontend של המערכת, ומספק ממשק משתמש מתקדם, נקי ואינטראקטיבי עבור סטודנטים ומנהלים.
 
-## Development server
+## 🚀 הוראות הרצה למפתח / בוחן
 
-To start a local development server, run:
+לפני הפעלת הקליינט, ודא כי השרת (Backend) ומסד הנתונים (Docker) פועלים כראוי.
 
+### 1. התקנת תלויות
+במידה וזו הרצה ראשונה, פתח את הטרמינל בתיקייה זו והרצ את הפקודה:
 ```bash
-ng serve
-```
+npm install
+2. הפעלת שרת הפיתוח המקומי
+כדי להפעיל את האפליקציה, הרץ את הפקודה:
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Bash
+npm start
+לאחר שהשרת נדלק, פתח את הדפדפן וגלוש לכתובת:
+http://localhost:4200/
 
-## Code scaffolding
+🛠️ הגדרות סביבה ופורטים 
+פורט ה-Frontend: האפליקציה רצה על פורט 4200.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+חיבור ל-API: קובץ השירות המרכזי מוגדר לפנות לשרת ה-Backend בפורט 5001 (עקב התנגשויות פורטים מקומיות בפורט 5000).
 
-```bash
-ng generate component component-name
-```
+🔑 נתיבים וגישה למערכת (Routes)
+מסך התחברות והרשמה: http://localhost:4200/login
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+מסך הלמידה האישי (סטודנט): http://localhost:4200/dashboard
 
-```bash
-ng generate --help
-```
+דשבורד מנהל (Admin): http://localhost:4200/admin
 
-## Building
+💡 הנחיות לבוחן - איך לבדוק את שני תפקידי המשתמשים:
+כברירת מחדל בקוד הנוכחי (לצורכי נוחות בדיקה מהירה), כל משתמש חדש שנרשם באופן עצמאי דרך האתר נוצר אוטומטית עם תפקיד של מנהל (admin).
 
-To build the project run:
+1. כדי לבדוק את דשבורד המנהל (Admin):
 
-```bash
-ng build
-```
+היכנס למסך הרישום, צור משתמש חדש ותועבר אוטומטית לדשבורד המנהל בכתובת: http://localhost:4200/admin. שם תוכל לראות את טבלת המשתמשים, החיפוש והחלוקה לעמודים.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+2. כדי לבדוק את מסך הלמידה האישי (Student / User):
+ישנן שתי דרכים קלות לצפות במסך הסטודנט הלומד וליצור שיעורים עם ה-AI:
 
-## Running unit tests
+דרך א' (מעבר ישיר): בעודך מחובר למערכת, שנה את הכתובת בדפדפן באופן ידני ל-http://localhost:4200/dashboard והמסך ייפתח לשימוש מלא.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+דרך ב' (התחברות כמשתמש רגיל נקי): על מנת לבדוק חוויית משתמש רגיל שאינו אדמין מהרגע הראשון, ניתן להריץ את פקודת ה-SQL הבאה בטרמינל כדי להזריק משתמש מוגדר מראש (role: 'user') עם הסיסמה 123456:
 
-```bash
-ng test
-```
+Bash
+docker exec -i ai_learning_mysql mysql -u root -e "USE ai_learning; INSERT INTO users (name, email, password, role, createdAt, updatedAt) VALUES ('תלמיד לדוגמה', 'student@test.com', '\$2b\$10\$X7EaeP6Bf2WbM6E...', 'user', NOW(), NOW());"
+לאחר מכן, התנתק מהאתר והתחבר במסך ה-Login עם הפרטים (מייל: student@test.com, סיסמה: 123456). המערכת תזהה את התפקיד ותנווט אותך אוטומטית למסך הלמידה.
 
-## Running end-to-end tests
+🧪 פקודות נוספות
+הרצת בדיקות יחידה (Unit Tests): npm test (מבוסס Vitest).
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+בניית הפרויקט לפרודקשן: npm run build.

@@ -21,7 +21,7 @@ export class SubCategory extends Model<SubCategoryAttributes, SubCategoryCreatio
 SubCategory.init(
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    name: { type: DataTypes.STRING, allowNull: false, unique: true },
+    name: { type: DataTypes.STRING, allowNull: false },
     description: { type: DataTypes.TEXT, allowNull: true },
     categoryId: { 
       type: DataTypes.INTEGER, 

@@ -1,1 +1,95 @@
-<p>dashboard works!</p>
+<div class="min-vh-100 bg-light" dir="rtl">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+      <span class="navbar-brand fw-bold fs-4">🧠 AI Learning Platform</span>
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-white opacity-75">שלום, {{ user?.name }}</span>
+        <button class="btn btn-outline-light btn-sm rounded-3" (click)="logout()">התנתק</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-5">
+    <div class="row g-4">
+      <!-- Left: Prompt Form -->
+      <div class="col-lg-7">
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+          <h2 class="h5 fw-bold text-primary mb-4">🎯 מה תרצה ללמוד היום?</h2>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">קטגוריה ראשית</label>
+              <select class="form-select rounded-3" [(ngModel)]="selectedCategoryId" (change)="onCategoryChange()">
+                <option value="" disabled>-- בחר קטגוריה --</option>
+                <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">תת-קטגוריה</label>
+              <select class="form-select rounded-3" [(ngModel)]="selectedSubCategoryId" [disabled]="!subCategories.length">
+                <option value="" disabled>-- בחר תת-קטגוריה --</option>
+                <option *ngFor="let sub of subCategories" [value]="sub.id">{{ sub.name }}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-semibold">השאלה שלך</label>
+            <textarea class="form-control rounded-3" rows="3"
+              placeholder='לדוגמה: "למד אותי על חורים שחורים"'
+              [(ngModel)]="userPrompt"></textarea>
+          </div>
+
+          <button class="btn btn-primary btn-lg w-100 rounded-3 fw-bold"
+            [disabled]="loading || !selectedSubCategoryId || !userPrompt"
+            (click)="submitPrompt()">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+            {{ loading ? 'מייצר שיעור...' : '✨ שלח ל-AI וצור שיעור' }}
+          </button>
+        </div>
+
+        <!-- AI Response -->
+        <div *ngIf="aiResponse" class="card border-0 shadow-sm rounded-4 p-4 border-start border-4 border-success">
+          <h3 class="h6 fw-bold text-success mb-3">✅ תשובת ה-AI:</h3>
+          <div class="text-secondary lh-lg" style="white-space: pre-wrap;">{{ aiResponse }}</div>
+        </div>
+      </div>
+
+      <!-- Right: History -->
+      <div class="col-lg-5">
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+          <h2 class="h5 fw-bold text-secondary mb-4">📚 היסטוריית הלמידה שלך
+            <span class="badge bg-secondary-subtle text-secondary rounded-pill ms-2">{{ history.length }}</span>
+          </h2>
+
+          <div *ngIf="!history.length" class="text-center py-4 text-muted">
+            <div class="fs-1 mb-2">📖</div>
+            עדיין לא שאלת שאלות. זה הזמן להתחיל!
+          </div>
+
+          <div class="accordion accordion-flush" id="historyAccordion">
+            <div class="accordion-item border rounded-3 mb-2" *ngFor="let item of history; let i = index">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed rounded-3 fw-semibold" type="button"
+                  data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i">
+                  <div class="d-flex flex-column align-items-start gap-1">
+                    <span>{{ item.prompt }}</span>
+                    <span class="badge bg-info-subtle text-info rounded-pill fw-normal" style="font-size: 0.7rem;">
+                      {{ item.SubCategory?.name }}
+                    </span>
+                  </div>
+                </button>
+              </h2>
+              <div [id]="'collapse' + i" class="accordion-collapse collapse" data-bs-parent="#historyAccordion">
+                <div class="accordion-body text-secondary small lh-lg" style="white-space: pre-wrap;">
+                  {{ item.response }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

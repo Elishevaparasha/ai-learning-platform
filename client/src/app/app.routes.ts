@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { AdminComponent } from './components/admin/admin.component';
+import { Login } from './components/login/login';
+import { Register } from './components/register/register';
+import { DashboardComponent } from './components/dashboard/dashboard';
+import { Admin} from './components/admin/admin';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: Login },
+  { path: 'register', component: Register },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }, // דף הבית מפנה ל-Login
-  { path: '**', redirectTo: '/login' } // כל נתיב לא מוכר יחזור ל-Login
+  { path: 'admin', component: Admin },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login' }
 ];
